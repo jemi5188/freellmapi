@@ -2,13 +2,13 @@
 
 # 支持的平台
 
-[`shared/types.ts`（第 59 行）](../../../shared/types.ts) 中的 `Platform` 联合类型是平台身份的唯一事实来源；[`server/src/providers/index.ts`](../../../server/src/providers/index.ts) 中的运行时注册表必须与它保持一致。联合类型目前声明了 **41 个成员**：
+[`shared/types.ts`（第 59 行）](../../../shared/types.ts) 中的 `Platform` 联合类型是平台身份的唯一事实来源；[`server/src/providers/index.ts`](../../../server/src/providers/index.ts) 中的运行时注册表必须与它保持一致。联合类型目前声明了 **42 个成员**：
 
-- **39 个内置平台**，启动时注册为适配器；
-- 加上 **`custom`** 占位（一个按 API 密钥逐个构建的真实 OpenAI 兼容适配器，因为它的 base URL 由用户提供），注册表共 **40 个条目**；
+- **40 个内置平台**，启动时注册为适配器；
+- 加上 **`custom`** 占位（一个按 API 密钥逐个构建的真实 OpenAI 兼容适配器，因为它的 base URL 由用户提供），注册表共 **41 个条目**；
 - 再加 **`sambanova`**——保留在类型联合中但不再注册：它在 V23（2026 年 6 月）被移除，当时它的免费额度被永久收回（一次性 $5 试用额度用完后，每次聊天调用都返回 402「需要绑定支付方式」）。
 
-39 个内置平台中，**7 个使用专属原生适配器**，**32 个搭载 `OpenAICompatProvider`** 对着各自提供方专属的 base URL。三个平台以免密钥方式注册（`kilo`、`ovh`，以及 `aihorde`——它用文档记载的匿名哨兵密钥自动配置）。README 里的公开目录招牌数字约为 29 家免费提供方 / 251 个模型系列 / 358 个免费端点——比联合类型少，因为若干已注册的网关把免费名册放在托管目录里维护，而不是随每个二进制一起发布。
+40 个内置平台中，**8 个使用专属原生适配器**，**32 个搭载 `OpenAICompatProvider`** 对着各自提供方专属的 base URL。三个平台以免密钥方式注册（`kilo`、`ovh`，以及 `aihorde`——它用文档记载的匿名哨兵密钥自动配置）。README 里的公开目录招牌数字约为 29 家免费提供方 / 251 个模型系列 / 358 个免费端点——比联合类型少，因为若干已注册的网关把免费名册放在托管目录里维护，而不是随每个二进制一起发布。
 
 ## 目录
 
@@ -54,6 +54,7 @@
 | `longcat` | LongCat (Meituan) | 带密钥 | OpenAI 兼容 | 每日免费额度；是中国提供方中的例外——中国大陆之外也能用邮箱注册。同时在 `/anthropic` 提供 Anthropic 线上格式（此处未使用）（#936）。 |
 | `xfyun` | iFlytek Spark | 带密钥 | OpenAI 兼容 | 鉴权是把控制台的 APIPassword 当作 Bearer 令牌使用；Lite 是文档记载的免费模型；未公布词元/QPS 上限（#936）。 |
 | `aihorde` | AI Horde | 免密钥（匿名哨兵 `0000000000`；注册密钥可提升队列优先级） | 原生（`AIHordeProvider`） | 社区志愿算力经队列代理接入：max_tokens >= 16、stop 必须是数组、不支持工具、用量以 kudos 计、120s 超时、无上游流式（#345）。 |
+| `puter` | Puter | 带密钥（控制台签发的 auth token；无厂商前缀，导入时须显式指明平台） | 原生（`PuterProvider`） | 经 `ai-chat` 驱动接入（`POST api.puter.com/drivers/call`），而非 `/puterai/openai/v1` 兼容端点——后者额外要求付费订阅，免费账号固定返回 402。免费额度为计量制、按月重置、由该账号下所有模型共享；Puter 未公布具体数值，故此处不作声明。校验探测 `GET /whoami`，因为 `test_mode` 仍会产生真实补全并计费。可为每条密钥配置代理地址，使各账号从各自的出口 IP 访问。39 个模型由版本化迁移写入，上线前均经过实弹冒烟。 |
 | `custom` | 自定义（OpenAI 兼容） | 用户提供的 base URL 存于各 `api_keys` 行 | 经 `resolveProvider()` 按密钥构建的 OpenAI 兼容适配器 | 注册占位让 `getProvider('custom')`/`hasProvider('custom')` 行为良好；为缓慢的本地运行时（llama.cpp、vLLM、LM Studio）设 120s 超时（#145）。 |
 
 ## 相关历史

@@ -88,14 +88,15 @@ Content-Type: text/plain;actually=json
 | `server/src/routes/keys.ts` | `PLATFORMS` 白名单新增 `'puter'` |
 | `server/src/providers/puter.ts` | **新增**：`PuterProvider extends BaseProvider` |
 | `server/src/providers/index.ts` | `register(new PuterProvider({ timeoutMs }))` |
-| `server/src/lib/sampling-params.ts` | 新增 `puter` 参数策略 |
+| `server/src/lib/sampling-params.ts` | `puter` 策略：`drop: [...EXTENDED_SAMPLING_KEYS]`（适配器不转发任何扩展采样参数，见 §5.1） |
 | `server/src/services/provider-quota.ts` | 新增 `puter` 配额池：池键 `puter::account`，并登记为共享池（见 §6.1） |
-| `client/src/lib/routing.ts` | `PLATFORM_COLORS` 新增 `puter` 配色（否则平台标签回落默认色） |
+| `client/src/lib/routing.ts` | `platformColors` 新增 `puter` 配色（否则平台标签回落默认色 `#94a3b8`） |
 | `server/src/db/migrations/20260928_000001_puter_models.ts` | **新增**：精选模型 `INSERT OR IGNORE` + `backfillFallback` |
+| `server/src/services/catalog-sync.ts` | 清理循环豁免「本地播种平台」（见 §8.5），否则托管目录同步会删掉 Puter 模型行 |
 | `client/src/components/keys/shared.tsx` | 平台下拉新增 Puter 项（label 说明额度，url 指向取 token 的页面） |
 | `client/src/components/keys/add-key-form.tsx` | 新增可选「代理地址」输入 |
 | `client/src/components/keys/edit-key-dialog.tsx` | 新增代理地址编辑，回显 `maskedProxyUrl` |
-| `client/src/i18n/locales/en.json`、`zh-CN.json` | 新增文案键 |
+| `client/src/i18n/locales/*` | **不改动**：`npm run check:i18n` 强制 60 个 locale 文件键完全一致，新增键要同步 60 个文件；代理输入框复用已有的 `keys.proxyUrl` 标签，placeholder 沿用字面量（先例：`proxy-settings-section.tsx`） |
 | `server/src/__tests__/providers/puter.test.ts` | **新增**：TDD 测试 |
 | `docs/en/providers/01-supported-platforms.md`、`docs/zh-cn/providers/01-supported-platforms.md` | 平台清单补一行 |
 
@@ -288,6 +289,28 @@ Puter 不是这个模型：**一个账号一份免费额度，跨该账号下所
 Puter 未公布免费额度的具体数值。migration 注释与 `Platform` 注释只写
 「计量制免费额度、按月重置、`puter.ai.*` 路径无需付费订阅」，**不编造数字**。
 
+### 8.5 与托管目录同步的冲突（实施前新发现的阻断项）
+
+`catalog-sync.ts` 每 12 小时（`startCatalogSync`）拉取托管目录并运行清理循环：
+
+```sql
+SELECT id, platform, model_id FROM models
+ WHERE platform != 'custom' AND key_id IS NULL AND source = 'catalog'
+```
+
+凡 `source='catalog'` 却不在本次目录中的行会被删除。Puter 的 40 行来自本地 migration，
+而 `api.freellmapi.co` 的托管目录**永远不会**包含 `puter` 平台，因此下次同步会把这 40 行
+连同 `fallback_config` 一起删掉——功能静默失效，且只在运行一段时间后暴露。
+
+修法（已确认）：在 `catalog-sync.ts` 的清理循环中豁免「本地播种平台」。
+
+- 新增文件级常量 `LOCALLY_SEEDED_PLATFORMS = new Set<Platform>(['puter'])`
+- 循环内 `if (LOCALLY_SEEDED_PLATFORMS.has(c.platform as Platform)) continue;`
+
+选择理由：这些行确实由内置 migration 创建，`source='catalog'` 的语义是正确的；
+不采用把它们标成 `source='user'` 的做法，因为那会让 `GET /api/models`
+（`models.ts:488` 把 `source === 'user'` 映射为 `'custom'`）把 Puter 行误报成自定义端点。
+
 ## 9. 测试策略（TDD）
 
 `server/src/__tests__/providers/puter.test.ts`，先写失败测试再实现：
@@ -308,6 +331,8 @@ Puter 未公布免费额度的具体数值。migration 注释与 `Platform` 注�
 8. **白名单同步**：`'puter'` 同时存在于 `Platform` 联合与 `PLATFORMS`。
 9. **配额池归属**：`inferPoolForPlatform('puter', ...)` 对不同 model 均返回 `'puter::account'`；
    `isSharedPool('puter')` 为 `true`。
+10. **清理豁免**：对不含 `puter` 行的目录执行 `applyCatalog`，Puter 模型行与其
+    `fallback_config` 条目仍然存在（§8.5）。
 
 验证命令：仓库根 `npm test` 与 `tsc --noEmit` 全绿。
 

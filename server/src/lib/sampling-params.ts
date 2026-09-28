@@ -311,6 +311,13 @@ export const PLATFORM_PARAM_POLICIES: Partial<Record<Platform, PlatformParamPoli
   },
   // AI Horde builds its own payload format; none of the extended set maps.
   aihorde: { drop: [...EXTENDED_SAMPLING_KEYS] },
+  // Puter rides the `ai-chat` driver, whose accepted argument surface the SDK
+  // pins to messages/model/temperature/max_tokens/tools/stream/normalize — the
+  // adapter forwards exactly those (see providers/puter.ts buildDriverBody) and
+  // nothing from the extended set, so none of it may be advertised as
+  // supported. Note the driver itself does tolerate reasoning_effort (§10.4
+  // probe); this is a deliberate adapter-scope decision, not a rejection.
+  puter: { drop: [...EXTENDED_SAMPLING_KEYS] },
   // Kilo's anonymous gateway 400s ("Provider returned error") whenever
   // response_format is present — observed live 2026-07-11; seed passes fine.
   // Dropping it also makes structured-output routing skip kilo entirely.

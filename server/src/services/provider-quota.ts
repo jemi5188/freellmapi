@@ -147,6 +147,11 @@ export function inferPoolForPlatform(platform: Platform, modelId?: string | null
   // so they pool together; a registered key has its own kudos priority but we
   // still bucket per-platform here.
   if (platform === 'aihorde') return 'aihorde::anonymous';
+  // Puter: the free allowance is metered per ACCOUNT and shared across every
+  // model that account may call, so the default per-model pool would be wrong —
+  // a 402 on one model would leave the account's other models looking
+  // untouched. One row per key, shared by the whole roster.
+  if (platform === 'puter') return 'puter::account';
   if (platform === 'huggingface') return 'huggingface::router';
   if (platform === 'opencode') return 'opencode::promo';
   // Aggregators with a single shared free pool across all ':free'/'auto:free' models.
@@ -177,11 +182,11 @@ export function inferPoolForPlatform(platform: Platform, modelId?: string | null
   return normalizedModelId ? `${platform}::${normalizedModelId}` : `${platform}::account`;
 }
 
-function isSharedPool(platform: Platform): boolean {
+export function isSharedPool(platform: Platform): boolean {
   if (platform === 'aclide') return true;
   if (platform === 'speka') return true;
   if (['electronhub', 'experiential', 'router9', 'septor', 'clod', 'speechify', 'blaze', 'lucidity', 'airforce', 'dreamprompting', 'waterfall', 'logfare'].includes(platform)) return true;
-  return ['openrouter', 'google', 'groq', 'cerebras', 'sail', 'bai', 'radeon', 'sambanova', 'nvidia', 'mistral', 'github', 'cohere', 'cloudflare', 'zhipu', 'ollama', 'kilo', 'pollinations', 'llm7', 'huggingface', 'opencode', 'routeway', 'bazaarlink', 'ainative', 'aion', 'requesty', 'navy', 'nara', 'sealion', 'orcarouter', 'unorouter', 'xkiro', 'anyapi', 'modelscope', 'aihorde'].includes(platform);
+  return ['openrouter', 'google', 'groq', 'cerebras', 'sail', 'bai', 'radeon', 'sambanova', 'nvidia', 'mistral', 'github', 'cohere', 'cloudflare', 'zhipu', 'ollama', 'kilo', 'pollinations', 'llm7', 'huggingface', 'opencode', 'routeway', 'bazaarlink', 'ainative', 'aion', 'requesty', 'navy', 'nara', 'sealion', 'orcarouter', 'unorouter', 'xkiro', 'anyapi', 'modelscope', 'aihorde', 'puter'].includes(platform);
 }
 
 type HeaderSpec = { metric: QuotaMetric; limit: string; remaining?: string; reset?: string; strategy?: QuotaResetStrategy };

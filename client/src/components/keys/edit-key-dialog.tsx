@@ -9,11 +9,12 @@ import { Label } from '@/components/ui/label'
 import { X } from 'lucide-react'
 import type { ApiKey } from '../../../../shared/types'
 import { useI18n } from '@/i18n'
-import { PLATFORMS } from './shared'
+import { PLATFORMS, isValidProxyUrlInput } from './shared'
 
 type UpdateBody = {
   label?: string
   key?: string
+  proxyUrl?: string
 }
 
 /** Edit the mutable parts of a key without deleting its stable endpoint
@@ -32,6 +33,12 @@ export function EditKeyDialog({
   const [apiKeyValue, setApiKeyValue] = useState('')
   const [accountId, setAccountId] = useState('')
   const [attempted, setAttempted] = useState(false)
+  // #590: the proxy override comes back masked, and that mask is what the
+  // field starts on. Keeping the initial value means an untouched field is
+  // never written back — storing `alice:***@host` would replace the real
+  // password with asterisks. Clearing the field sends '' (drop the override).
+  const initialProxyUrl = apiKey.maskedProxyUrl ?? ''
+  const [proxyUrl, setProxyUrl] = useState(initialProxyUrl)
 
   const needsAccountId = apiKey.platform === 'cloudflare'
   const canEditCredential = !apiKey.keyless
@@ -46,7 +53,9 @@ export function EditKeyDialog({
     (accountId.trim() ? !apiKeyValue.trim() : Boolean(apiKeyValue.trim()))
     ? t('keys.editCredentialPartsRequired')
     : null
-  const hasChanges = label !== apiKey.label || Boolean(credential)
+  const proxyError = isValidProxyUrlInput(proxyUrl) ? null : t('validation.url')
+  const proxyChanged = proxyUrl.trim() !== initialProxyUrl
+  const hasChanges = label !== apiKey.label || Boolean(credential) || proxyChanged
 
   const updateKey = useMutation({
     mutationFn: (body: UpdateBody) =>
@@ -59,7 +68,7 @@ export function EditKeyDialog({
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
-    if (credentialError) {
+    if (credentialError || proxyError) {
       setAttempted(true)
       return
     }
@@ -67,6 +76,8 @@ export function EditKeyDialog({
     const body: UpdateBody = {}
     if (label !== apiKey.label) body.label = label
     if (credential) body.key = credential
+    // Only when the field actually changed — '' clears the override.
+    if (proxyChanged) body.proxyUrl = proxyUrl.trim()
     if (Object.keys(body).length > 0) updateKey.mutate(body)
     else onOpenChange(false)
   }
@@ -143,6 +154,20 @@ export function EditKeyDialog({
             ) : (
               <Input value={t('keys.noKeyNeededPlaceholder')} readOnly className="bg-muted/30 font-mono text-xs" />
             )}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-xs" htmlFor="edit-key-proxy">{t('keys.proxyUrl')}</Label>
+            <Input
+              id="edit-key-proxy"
+              value={proxyUrl}
+              onChange={e => setProxyUrl(e.target.value)}
+              placeholder="socks5://user:pass@host:1080"
+              className="font-mono text-xs"
+              aria-invalid={attempted && Boolean(proxyError)}
+            />
+            {attempted && <FieldError error={proxyError} />}
+            <p className="text-[11px] text-muted-foreground">{t('keys.outboundProxyDescription')}</p>
           </div>
 
           {updateKey.isError && (

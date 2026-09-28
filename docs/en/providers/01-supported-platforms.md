@@ -2,13 +2,13 @@
 
 # Supported platforms
 
-The `Platform` union in [`shared/types.ts` (line 59)](../../../shared/types.ts) is the single source of truth for platform identity; the runtime registry in [`server/src/providers/index.ts`](../../../server/src/providers/index.ts) must match it. The union currently declares **45 members**:
+The `Platform` union in [`shared/types.ts` (line 59)](../../../shared/types.ts) is the single source of truth for platform identity; the runtime registry in [`server/src/providers/index.ts`](../../../server/src/providers/index.ts) must match it. The union currently declares **46 members**:
 
-- **43 built-in platforms** registered as adapters at startup,
-- plus the **`custom`** placeholder (a real OpenAI-compatible adapter built per API key, since its base URL is user-supplied), giving **44 entries** in the registry map,
+- **44 built-in platforms** registered as adapters at startup,
+- plus the **`custom`** placeholder (a real OpenAI-compatible adapter built per API key, since its base URL is user-supplied), giving **45 entries** in the registry map,
 - plus **`sambanova`**, retained in the type union but no longer registered — it was dropped in V23 (June 2026) when its free tier was permanently retired (every chat call returns 402 "payment method required" once the one-time $5 trial credit lapses).
 
-Of the 43 built-in platforms, **10 use dedicated adapters** and **33 ride `OpenAICompatProvider`** directly against a provider-specific base URL. Three platforms are registered keyless (`kilo`, `ovh`, and `aihorde`, which auto-configures with its documented anonymous sentinel key). The public catalog headline is smaller than the union because several registered gateways keep their free rosters in the hosted catalog rather than shipping them to every binary.
+Of the 44 built-in platforms, **11 use dedicated adapters** and **33 ride `OpenAICompatProvider`** directly against a provider-specific base URL. Three platforms are registered keyless (`kilo`, `ovh`, and `aihorde`, which auto-configures with its documented anonymous sentinel key). The public catalog headline is smaller than the union because several registered gateways keep their free rosters in the hosted catalog rather than shipping them to every binary.
 
 ## Catalog
 
@@ -58,6 +58,7 @@ Of the 43 built-in platforms, **10 use dedicated adapters** and **33 ride `OpenA
 | `longcat` | LongCat (Meituan) | Keyed | OpenAI-compat | Daily free quota; exception among the Chinese providers — email signup works from outside mainland China. Also speaks Anthropic wire at `/anthropic` (unused here) (#936). |
 | `xfyun` | iFlytek Spark | Keyed | OpenAI-compat | Auth is the console APIPassword as a Bearer token; the Lite model is the documented free one; no published token/QPS ceiling (#936). |
 | `aihorde` | AI Horde | Keyless (anonymous sentinel `0000000000`; registered key raises queue priority) | Native (`AIHordeProvider`) | Community volunteer workers via queue-based proxy: max_tokens >= 16, stop must be array, no tools, usage reported as kudos, 120s timeout, no upstream streaming (#345). |
+| `puter` | Puter | Keyed (dashboard-issued auth token; no vendor prefix, so name the platform explicitly on import) | Native (`PuterProvider`) | Reaches the models through the `ai-chat` driver (`POST api.puter.com/drivers/call`), NOT the `/puterai/openai/v1` compatibility endpoint — that one additionally requires a paid subscription and answers 402 for free accounts. The free allowance is metered, resets monthly and is shared by every model on the account; Puter publishes no numeric limit, so none is claimed. Validation probes `GET /whoami`, because `test_mode` still bills a real completion. A per-key proxy URL lets each account exit from its own IP. 39 models ship from a versioned migration, each live-smoked before release. |
 | `custom` | Custom (OpenAI-compatible) | User-supplied base URL stored per `api_keys` row | OpenAI-compat built per key via `resolveProvider()` | Registered placeholder keeps `getProvider('custom')`/`hasProvider('custom')` well-behaved; 120s timeout for slow local runtimes (llama.cpp, vLLM, LM Studio) (#145). |
 
 ## Related history
