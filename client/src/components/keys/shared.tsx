@@ -90,7 +90,44 @@ export const PLATFORMS: { value: Platform; label: string; url: string; keyless?:
   { value: 'volcengine', label: 'Volcengine Ark (free daily, needs cn real-name)', url: 'https://console.volcengine.com/ark' },
   { value: 'longcat', label: 'LongCat (free daily, email signup ok)', url: 'https://longcat.chat/platform' },
   { value: 'xfyun', label: 'iFlytek Spark (free Lite, needs cn real-name)', url: 'https://console.xfyun.cn' },
+  // Puter's credential is a bare auth token minted from the dashboard
+  // (Account → API token → Create token) — no vendor prefix, so key-parser's
+  // PREFIX_MAP cannot recognise it on import. Pick Puter from this dropdown, or
+  // name the platform inline when importing a file. The free allowance is
+  // metered, resets monthly, and is shared by every model on the account;
+  // Puter publishes no numeric limit, so none is claimed here.
+  { value: 'puter', label: 'Puter (metered free allowance, shared per account)', url: 'https://puter.com/dashboard#account' },
 ]
+
+// Every proxy scheme the app accepts — mirrors PROXY_SCHEMES in
+// server/src/lib/proxy.ts, and the same list the per-key proxy validator
+// (lib/key-proxy.ts) enforces. Kept in lockstep so a URL this form accepts is
+// never a 400 on POST/PATCH /api/keys.
+const PROXY_URL_SCHEMES: readonly string[] = ['http:', 'https:', 'socks4:', 'socks4a:', 'socks5:', 'socks5h:']
+
+/** Longest per-key proxy URL the server stores (KEY_PROXY_URL_MAX). */
+const PROXY_URL_MAX = 2048
+
+/**
+ * True when a per-key proxy URL is storable: either '' (no override) or a
+ * parseable URL on a supported scheme that names a host. The mirror of
+ * `isValidKeyProxyUrl` on the server, so the form can flag a bad value before
+ * it becomes a round trip.
+ */
+export function isValidProxyUrlInput(url: string): boolean {
+  const trimmed = url.trim()
+  if (!trimmed) return true
+  if (trimmed.length > PROXY_URL_MAX) return false
+  let parsed: URL
+  try {
+    parsed = new URL(trimmed)
+  } catch {
+    return false
+  }
+  if (!PROXY_URL_SCHEMES.includes(parsed.protocol)) return false
+  // `http://` parses fine but names no host to connect to.
+  return parsed.hostname !== ''
+}
 
 // 'custom' is configured through its own form (base URL + model), not the
 // generic key dropdown — but it still appears in the grouped provider list.

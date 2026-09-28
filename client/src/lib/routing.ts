@@ -450,6 +450,7 @@ export const platformColors: Record<string, string> = {
   volcengine:  '#00b8d9',
   longcat:     '#ffd100',
   xfyun:       '#1f6fd0',
+  puter:       '#c026d3',
 }
 
 // ── Grouped (unified) rendering ──────────────────────────────────────────────
