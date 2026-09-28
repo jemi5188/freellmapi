@@ -12,7 +12,7 @@ import { useI18n } from '@/i18n'
 import { toast } from '@/lib/toast'
 import type { FallbackEntry } from '@/lib/routing'
 import { scopeCandidates, shouldOfferModelPicker, type ScopeCandidate } from '@/lib/model-scope-selection'
-import { GetKeyLink, PLATFORMS } from './shared'
+import { GetKeyLink, PLATFORMS, isValidProxyUrlInput } from './shared'
 
 /** A key that just landed, plus the models the picker should offer for it.
  *  Only produced when the picker is actually worth showing (#657) — otherwise
@@ -41,6 +41,10 @@ export function AddKeyForm({ onSuccess, initialPlatform }: { onSuccess: (offer?:
   const [accountId, setAccountId] = useState('')
   const [label, setLabel] = useState('')
   const [addAttempted, setAddAttempted] = useState(false)
+  // #590: optional per-key proxy override. Puter is the driving case — one
+  // account per exit IP means each account burns its own free allowance — but
+  // any provider can carry one.
+  const [proxyUrl, setProxyUrl] = useState('')
   // Several credentials for one provider in one go (#705). Pooling keys is the
   // point of this app, and the only bulk path was the file importer, so anyone
   // holding five Groq keys reopened this dialog five times. Off by default: the
@@ -102,7 +106,7 @@ export function AddKeyForm({ onSuccess, initialPlatform }: { onSuccess: (offer?:
 
   const addKey = useMutation({
     meta: { silenceToast: true },
-    mutationFn: (body: { platform: string; key: string; label?: string }) =>
+    mutationFn: (body: { platform: string; key: string; label?: string; proxyUrl?: string }) =>
       apiFetch<{ id: number; notice?: string | null }>('/api/keys', { method: 'POST', body: JSON.stringify(body) }),
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['keys'] })
@@ -153,11 +157,16 @@ export function AddKeyForm({ onSuccess, initialPlatform }: { onSuccess: (offer?:
     ? (keyList.length === 0 ? t('validation.required') : null)
     : (!isKeyless && !apiKey.trim() ? t('validation.required') : null)
   const accountIdError = needsAccountId && !accountId.trim() ? t('validation.required') : null
+  // '' is valid — it means "no override". A non-empty value must satisfy the
+  // same rules as the server's isValidKeyProxyUrl, so a typo fails here rather
+  // than as a 400 after submit. The message is the closest existing key; the
+  // i18n check keeps all 60 locales' key sets identical, so no new one is added.
+  const proxyError = isValidProxyUrlInput(proxyUrl) ? null : t('validation.url')
   const pending = addKey.isPending || addSeveral.isPending
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (platformError || keyError || accountIdError) {
+    if (platformError || keyError || accountIdError || proxyError) {
       setAddAttempted(true)
       return
     }
@@ -170,7 +179,7 @@ export function AddKeyForm({ onSuccess, initialPlatform }: { onSuccess: (offer?:
     }
     // Keyless providers submit an empty key; the backend stores a sentinel.
     const key = isKeyless ? '' : (needsAccountId ? `${accountId}:${apiKey}` : apiKey)
-    addKey.mutate({ platform, key, label: label || undefined })
+    addKey.mutate({ platform, key, label: label || undefined, proxyUrl: proxyUrl.trim() || undefined })
   }
 
   return (
@@ -263,6 +272,21 @@ export function AddKeyForm({ onSuccess, initialPlatform }: { onSuccess: (offer?:
             </p>
           )}
         </div>
+        {!severalMode && (
+          <div className="space-y-1.5">
+            <Label className="text-xs">{t('keys.proxyUrl')}</Label>
+            <Input
+              value={proxyUrl}
+              onChange={e => setProxyUrl(e.target.value)}
+              // Literal, like proxy-settings-section.tsx — one placeholder for
+              // every locale needs no translation.
+              placeholder="socks5://user:pass@host:1080"
+              className="w-[240px] font-mono text-xs"
+              aria-invalid={addAttempted && !!proxyError}
+            />
+            {addAttempted && <FieldError error={proxyError} />}
+          </div>
+        )}
         <div className="space-y-1.5">
           <Label className="text-xs">{t('keys.label')}</Label>
           <div className="flex flex-wrap items-center space-x-3">
