@@ -230,6 +230,17 @@ export type Platform =
   // aihorde.net key raises queue priority. Has a dedicated AIHordeProvider that
   // normalizes the proxy's OpenAI divergences. See issue #345.
   | 'aihorde'
+  // Puter — metered free allowance through the `ai-chat` driver
+  // (POST https://api.puter.com/drivers/call), NOT the /puterai/openai/v1
+  // compatibility endpoint: that one additionally requires a paid
+  // subscription and answers 402 for free accounts. The allowance is
+  // usage-metered and resets monthly, shared across every model of the
+  // account, and Puter publishes no numeric limit — so none is claimed here.
+  // The credential is the account auth token, stored per key (multi-account is
+  // the point) with an optional per-key proxy so each account egresses from a
+  // different IP. Has a dedicated PuterProvider. See
+  // docs/superpowers/specs/2026-09-28-puter-provider-design.md.
+  | 'puter'
   // User-configured OpenAI-compatible endpoint (llama.cpp, LM Studio, vLLM,
   // Ollama, any base_url). The endpoint URL lives on the api_keys row; see #117.
   | 'custom';
