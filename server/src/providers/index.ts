@@ -5,6 +5,7 @@ import { OpenAICompatProvider } from './openai-compat.js';
 import { CohereProvider } from './cohere.js';
 import { CloudflareProvider } from './cloudflare.js';
 import { AIHordeProvider } from './aihorde.js';
+import { PuterProvider } from './puter.js';
 import { ModelScopeProvider } from './modelscope.js';
 import { PollinationsProvider } from './pollinations.js';
 import { ZhipuProvider } from './zhipu.js';
@@ -552,6 +553,16 @@ register(new OpenAICompatProvider({
 // auto-configures and works anonymously (key 0000000000, lowest queue
 // priority); a registered aihorde.net key raises priority. See issue #345.
 register(new AIHordeProvider());
+
+// Puter — a dedicated adapter, NOT an OpenAICompatProvider: the OpenAI-shaped
+// endpoints (/puterai/openai/v1/*) require a paid subscription and 402 for free
+// accounts. The metered free allowance is only reachable through the ai-chat
+// driver (POST /drivers/call, body-carried auth_token, Content-Type
+// 'text/plain;actually=json'), which also answers NDJSON with no finish_reason
+// line. Its own 120s default timeout (PROVIDER_TIMEOUT_PUTER to override) is
+// resolved inside the module. See
+// docs/superpowers/specs/2026-09-28-puter-provider-design.md.
+register(new PuterProvider());
 
 // Placeholder so getProvider('custom')/hasProvider('custom')/getAllProviders()
 // behave — but the real instance is built per-key by resolveProvider(), since
