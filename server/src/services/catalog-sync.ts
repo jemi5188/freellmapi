@@ -21,6 +21,16 @@ import { ensureAllModelsInProfiles } from './profile-models.js';
 // (see services/media.ts), never into the chat `models` table.
 const MEDIA_MODALITIES = new Set(['image', 'audio']);
 
+// Platforms whose roster is seeded by a bundled migration rather than by the
+// hosted catalog, which will never list them. Their rows legitimately carry
+// source='catalog' (a migration created them, not a user), so without this
+// exemption the prune pass below deletes the entire platform — and its
+// fallback_config rows — on the first sync after boot, silently and only after
+// the 12h interval. Puter qualifies: the free allowance is reachable only
+// through its own driver protocol, so it cannot be served from
+// api.freellmapi.co. See docs/superpowers/specs/2026-09-28-puter-provider-design.md §8.5.
+const LOCALLY_SEEDED_PLATFORMS = new Set<Platform>(['puter']);
+
 /**
  * catalog-sync — keeps the local model catalog in step with the published one.
  *
@@ -573,6 +583,9 @@ function applyCatalogInner(db: Db, catalog: Catalog): NonNullable<SyncResult['co
     const deleteModel = db.prepare('DELETE FROM models WHERE id = ?');
     for (const c of candidates) {
       if (!hasProvider(c.platform as Platform)) continue; // not catalog-managed by this binary
+      // Seeded by a migration, never listable in the hosted catalog: pruning it
+      // would delete the platform wholesale (see LOCALLY_SEEDED_PLATFORMS).
+      if (LOCALLY_SEEDED_PLATFORMS.has(c.platform as Platform)) continue;
       if (!inCatalog.has(`${c.platform}:${c.model_id}`)) {
         deleteFb.run(c.id);
         deleteModel.run(c.id);
