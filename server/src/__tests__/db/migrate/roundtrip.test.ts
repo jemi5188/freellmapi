@@ -44,6 +44,7 @@ const KEY_MONTHLY_USAGE_FILENAME = '20260914_000001_key_monthly_usage.ts';
 const QUOTA_SNAPSHOT_FRESHNESS_FILENAME = '20260915_000001_quota_snapshot_freshness.ts';
 const PUTER_MODELS_FILENAME = '20260928_000001_puter_models.ts';
 const PUTER_EXPANSION_FILENAME = '20261001_000001_puter_models_expansion.ts';
+const KEY_USAGE_FILENAME = '20261001_000002_key_usage_columns.ts';
 
 interface SchemaRow {
   type: string;
@@ -134,6 +135,7 @@ describe('migration round trip', () => {
         QUOTA_SNAPSHOT_FRESHNESS_FILENAME,
         PUTER_MODELS_FILENAME,
         PUTER_EXPANSION_FILENAME,
+        KEY_USAGE_FILENAME,
       ]);
     } finally {
       db.close();
