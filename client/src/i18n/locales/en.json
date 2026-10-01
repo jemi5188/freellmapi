@@ -596,6 +596,10 @@
     "modelScopeClear": "Clear scope",
     "modelScopeBadgeOne": "scoped · 1 model",
     "modelScopeBadgeOther": "scoped · {count} models",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Which models should this key serve?",
       "hint": "Your {provider} key was added and currently serves every model below. Untick any this key isn't allowed to use — the router will skip it for those.",

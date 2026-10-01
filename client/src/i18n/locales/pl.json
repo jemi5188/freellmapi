@@ -582,6 +582,10 @@
     "modelScopeClear": "Wyczyść zakres",
     "modelScopeBadgeOne": "ograniczony · 1 model",
     "modelScopeBadgeOther": "ograniczony · {count} modeli",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Które modele ma obsługiwać ten klucz?",
       "hint": "Twój klucz {provider} został dodany i obsługuje obecnie wszystkie modele poniżej. Odznacz te, których ten klucz nie może używać — router pominie go dla nich.",

@@ -582,6 +582,10 @@
     "modelScopeClear": "Kosongkan skop",
     "modelScopeBadgeOne": "terhad · 1 model",
     "modelScopeBadgeOther": "terhad · {count} model",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Model manakah yang patut dilayan oleh kunci ini?",
       "hint": "Kunci {provider} anda telah ditambah dan kini melayani setiap model di bawah. Nyahtanda mana-mana model yang kunci ini tidak dibenarkan guna — penghala akan melangkaunya untuk model tersebut.",

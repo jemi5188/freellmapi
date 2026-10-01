@@ -582,6 +582,10 @@
     "modelScopeClear": "Pa àgbègbè rẹ́",
     "modelScopeBadgeOne": "ní ààlà · awoṣe 1",
     "modelScopeBadgeOther": "ní ààlà · awoṣe {count}",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Àwọn awoṣe wo ni bọtìnì yìí gbọdọ̀ ṣe ìránṣẹ́ fún?",
       "hint": "A ti ṣàfikún bọtìnì {provider} rẹ, ó sì ń ṣe ìránṣẹ́ fún gbogbo àwọn awoṣe tí ó wà nísàlẹ̀ báyìí. Yọ àmì kúrò nínú èyíkéyìí tí bọtìnì yìí kò ní ààyè láti lò — olulana yóò fò ó kọjá fún àwọn wọ̀nyẹn.",

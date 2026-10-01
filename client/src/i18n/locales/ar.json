@@ -582,6 +582,10 @@
     "modelScopeClear": "مسح النطاق",
     "modelScopeBadgeOne": "مقيّد · نموذج واحد",
     "modelScopeBadgeOther": "مقيّد · {count} نماذج",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ما النماذج التي ينبغي أن يخدمها هذا المفتاح؟",
       "hint": "تمت إضافة مفتاح {provider} الخاص بك، وهو يخدم حاليًا كل نموذج أدناه. ألغِ تحديد أي نموذج لا يُسمح لهذا المفتاح باستخدامه — سيتخطاه الموجّه لتلك النماذج.",

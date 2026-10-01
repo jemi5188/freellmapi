@@ -582,6 +582,10 @@
     "modelScopeClear": "Očisti opseg",
     "modelScopeBadgeOne": "ograničen · 1 model",
     "modelScopeBadgeOther": "ograničen · {count} modela",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Za koje se modele koristi ovaj ključ?",
       "hint": "Vaš {provider} ključ je dodan i trenutačno poslužuje sve modele u nastavku. Odznačite one koje ovaj ključ ne smije koristiti — router će ga za njih preskočiti.",

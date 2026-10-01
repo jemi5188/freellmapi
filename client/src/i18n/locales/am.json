@@ -582,6 +582,10 @@
     "modelScopeClear": "ወሰን አጥፋ",
     "modelScopeBadgeOne": "የተገደበ · 1 ሞዴል",
     "modelScopeBadgeOther": "የተገደበ · {count} ሞዴሎች",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ይህ ቁልፍ የትኞቹን ሞዴሎች ያገልግል?",
       "hint": "የ{provider} ቁልፍዎ ተጨምሯል እና በአሁኑ ጊዜ ከታች ያሉትን ሁሉንም ሞዴሎች ያገለግላል። ይህ ቁልፍ እንዲጠቀምባቸው ያልተፈቀደላቸውን ሞዴሎች ምልክት ያንሱ — ራውተሩ ለእነሱ ይህን ቁልፍ ያልፋል።",

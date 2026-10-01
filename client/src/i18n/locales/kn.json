@@ -582,6 +582,10 @@
     "modelScopeClear": "ವ್ಯಾಪ್ತಿ ತೆಗೆದುಹಾಕಿ",
     "modelScopeBadgeOne": "ಸೀಮಿತ · 1 ಮಾಡೆಲ್",
     "modelScopeBadgeOther": "ಸೀಮಿತ · {count} ಮಾಡೆಲ್‌ಗಳು",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ಈ ಕೀ ಯಾವ ಮಾಡೆಲ್‌ಗಳಿಗೆ ಸೇವೆ ಸಲ್ಲಿಸಬೇಕು?",
       "hint": "ನಿಮ್ಮ {provider} ಕೀ ಸೇರಿಸಲಾಗಿದೆ ಮತ್ತು ಸದ್ಯಕ್ಕೆ ಅದು ಕೆಳಗಿನ ಪ್ರತಿಯೊಂದು ಮಾಡೆಲ್‌ಗೂ ಸೇವೆ ಸಲ್ಲಿಸುತ್ತದೆ. ಈ ಕೀ ಬಳಸಬಾರದ ಮಾಡೆಲ್‌ಗಳ ಆಯ್ಕೆಯನ್ನು ತೆಗೆದುಹಾಕಿ — ಅವುಗಳಿಗೆ ರೂಟರ್ ಇದನ್ನು ಬಿಟ್ಟುಬಿಡುತ್ತದೆ.",

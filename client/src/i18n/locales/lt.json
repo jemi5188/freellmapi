@@ -582,6 +582,10 @@
     "modelScopeClear": "Išvalyti aprėptį",
     "modelScopeBadgeOne": "apribotas · 1 modelis",
     "modelScopeBadgeOther": "apribotas · {count} modeliai",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Kuriuos modelius turėtų aptarnauti šis raktas?",
       "hint": "Jūsų {provider} raktas pridėtas ir šiuo metu aptarnauja visus toliau pateiktus modelius. Atžymėkite tuos, kurių šiam raktui naudoti negalima — maršrutizatorius jį jiems praleis.",

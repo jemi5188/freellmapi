@@ -582,6 +582,10 @@
     "modelScopeClear": "Kapsamı temizle",
     "modelScopeBadgeOne": "sınırlı · 1 model",
     "modelScopeBadgeOther": "sınırlı · {count} model",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Bu anahtar hangi modellere hizmet versin?",
       "hint": "{provider} anahtarınız eklendi ve şu anda aşağıdaki tüm modellere hizmet veriyor. Bu anahtarın kullanmasına izin verilmeyen modellerin işaretini kaldırın — yönlendirici o modeller için bu anahtarı atlar.",

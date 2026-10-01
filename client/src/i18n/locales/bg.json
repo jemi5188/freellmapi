@@ -582,6 +582,10 @@
     "modelScopeClear": "Изчисти обхвата",
     "modelScopeBadgeOne": "ограничен · 1 модел",
     "modelScopeBadgeOther": "ограничен · {count} модела",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Кои модели да обслужва този ключ?",
       "hint": "Вашият ключ {provider} беше добавен и в момента обслужва всички модели по-долу. Махнете отметката от тези, които този ключ няма право да използва — за тях рутерът ще го пропуска.",

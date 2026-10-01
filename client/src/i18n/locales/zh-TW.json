@@ -586,6 +586,10 @@
     "modelScopeClear": "清除範圍",
     "modelScopeBadgeOne": "限定 · 1 個模型",
     "modelScopeBadgeOther": "限定 · {count} 個模型",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "此金鑰應服務哪些模型？",
       "hint": "您的 {provider} 金鑰已新增，目前可服務下方所有模型。請取消勾選此金鑰不可使用的模型——路由器會為這些模型略過此金鑰。",

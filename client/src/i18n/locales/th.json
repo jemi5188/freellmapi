@@ -582,6 +582,10 @@
     "modelScopeClear": "ล้างขอบเขต",
     "modelScopeBadgeOne": "จำกัด · 1 โมเดล",
     "modelScopeBadgeOther": "จำกัด · {count} โมเดล",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "คีย์นี้ควรให้บริการโมเดลใดบ้าง",
       "hint": "เพิ่มคีย์ {provider} ของคุณแล้ว และตอนนี้ให้บริการทุกโมเดลด้านล่าง ยกเลิกการเลือกโมเดลที่ไม่อนุญาตให้คีย์นี้ใช้ — เราเตอร์จะข้ามคีย์นี้สำหรับโมเดลเหล่านั้น",

@@ -582,6 +582,10 @@
     "modelScopeClear": "Ryd omfang",
     "modelScopeBadgeOne": "begrænset · 1 model",
     "modelScopeBadgeOther": "begrænset · {count} modeller",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Hvilke modeller skal denne nøgle betjene?",
       "hint": "Din {provider}-nøgle er tilføjet og betjener i øjeblikket alle modeller nedenfor. Fjern fluebenet ved de modeller, nøglen ikke må bruges til — routeren springer den så over for dem.",

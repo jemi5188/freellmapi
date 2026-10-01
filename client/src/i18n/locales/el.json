@@ -582,6 +582,10 @@
     "modelScopeClear": "Καθαρισμός εύρους",
     "modelScopeBadgeOne": "περιορισμένο · 1 μοντέλο",
     "modelScopeBadgeOther": "περιορισμένο · {count} μοντέλα",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Ποια μοντέλα να εξυπηρετεί αυτό το κλειδί;",
       "hint": "Το κλειδί σας για {provider} προστέθηκε και αυτή τη στιγμή εξυπηρετεί όλα τα παρακάτω μοντέλα. Αποεπιλέξτε όσα δεν επιτρέπεται να χρησιμοποιεί αυτό το κλειδί — ο δρομολογητής θα το παρακάμπτει για αυτά.",

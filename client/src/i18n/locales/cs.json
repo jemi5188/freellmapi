@@ -582,6 +582,10 @@
     "modelScopeClear": "Vymazat rozsah",
     "modelScopeBadgeOne": "omezený · 1 model",
     "modelScopeBadgeOther": "omezený · {count} modelů",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Které modely má tento klíč obsluhovat?",
       "hint": "Váš klíč {provider} byl přidán a nyní obsluhuje všechny modely níže. Odškrtněte ty, které tento klíč nesmí používat — router jej pro ně přeskočí.",

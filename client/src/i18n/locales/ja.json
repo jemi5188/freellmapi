@@ -582,6 +582,10 @@
     "modelScopeClear": "スコープを解除",
     "modelScopeBadgeOne": "限定 · 1 モデル",
     "modelScopeBadgeOther": "限定 · {count} モデル",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "このキーをどのモデルで使用しますか？",
       "hint": "{provider} のキーを追加しました。現在は以下のすべてのモデルで使用されます。このキーを使用できないモデルはチェックを外してください。それらのモデルではルーターがこのキーをスキップします。",

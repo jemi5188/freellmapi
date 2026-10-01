@@ -582,6 +582,10 @@
     "modelScopeClear": "Fjern avgrensning",
     "modelScopeBadgeOne": "begrenset · 1 modell",
     "modelScopeBadgeOther": "begrenset · {count} modeller",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Hvilke modeller skal denne nøkkelen betjene?",
       "hint": "{provider}-nøkkelen din er lagt til og betjener for øyeblikket alle modellene nedenfor. Fjern haken ved modellene nøkkelen ikke får brukes til — ruteren hopper da over den for disse.",

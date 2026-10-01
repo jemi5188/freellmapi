@@ -217,6 +217,15 @@ export interface KeyValidationFailure {
 
 export type KeyValidationResult = boolean | KeyValidationFailure;
 
+/** Snapshot of a provider account's remaining metered allowance, for the
+ *  dashboard usage badge (docs/superpowers/specs/2026-10-01-puter-usage-badge-design.md).
+ *  Providers without a metering read simply do not implement fetchUsage. */
+export interface KeyUsage {
+  remaining: number;
+  monthlyAllowance: number;
+  unit: string;
+}
+
 export abstract class BaseProvider {
   abstract readonly platform: Platform;
   abstract readonly name: string;

@@ -582,6 +582,10 @@
     "modelScopeClear": "범위 지우기",
     "modelScopeBadgeOne": "제한됨 · 모델 1개",
     "modelScopeBadgeOther": "제한됨 · 모델 {count}개",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "이 키로 어떤 모델을 제공할까요?",
       "hint": "{provider} 키가 추가되었으며 현재 아래의 모든 모델에 사용됩니다. 이 키를 사용할 수 없는 모델은 체크를 해제하세요. 해당 모델에는 라우터가 이 키를 건너뜁니다.",

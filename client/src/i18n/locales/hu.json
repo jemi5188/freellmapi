@@ -582,6 +582,10 @@
     "modelScopeClear": "Kör törlése",
     "modelScopeBadgeOne": "korlátozva · 1 modell",
     "modelScopeBadgeOther": "korlátozva · {count} modell",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Mely modelleket szolgálja ki ez a kulcs?",
       "hint": "A(z) {provider} kulcs hozzáadva, és jelenleg az alábbi összes modellt kiszolgálja. Vegye ki a pipát azoknál, amelyeket ez a kulcs nem használhat — ezeknél a router kihagyja.",

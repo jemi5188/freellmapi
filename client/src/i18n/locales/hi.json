@@ -582,6 +582,10 @@
     "modelScopeClear": "दायरा हटाएँ",
     "modelScopeBadgeOne": "सीमित · 1 मॉडल",
     "modelScopeBadgeOther": "सीमित · {count} मॉडल",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "यह कुंजी कौन-से मॉडल के लिए काम करेगी?",
       "hint": "आपकी {provider} कुंजी जोड़ दी गई है और अभी यह नीचे दिए गए हर मॉडल के लिए काम करती है। जिन मॉडलों के लिए इस कुंजी का उपयोग नहीं होना चाहिए, उनका चयन हटा दें — राउटर उनके लिए इसे छोड़ देगा।",

@@ -582,6 +582,10 @@
     "modelScopeClear": "Share iyaka",
     "modelScopeBadgeOne": "iyakantacce · samfuri 1",
     "modelScopeBadgeOther": "iyakantacce · samfura {count}",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Waɗanne samfura wannan maɓalli zai yi wa hidima?",
       "hint": "An ƙara maɓallin {provider} naka kuma a yanzu yana yi wa duk samfuran da ke ƙasa hidima. Cire alamar duk samfurin da ba a yarda wannan maɓalli ya yi amfani da shi ba — router zai tsallake shi ga waɗannan.",

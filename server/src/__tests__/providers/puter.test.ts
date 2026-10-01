@@ -467,6 +467,34 @@ describe('PuterProvider', () => {
       expect(KEY_PLATFORMS).toContain('puter');
     });
   });
+
+  // §4.1 of the usage-badge spec — metering read, flat payload, free of charge.
+  describe('getUsage', () => {
+    it('reads the flat metering payload', async () => {
+      mockFetch(jsonResponse({ remaining: 972.05, monthUsageAllowance: 1000, addons: {}, unit: 'credits' }));
+      const usage = await new PuterProvider().getUsage(TOKEN);
+      expect(usage).toEqual({ remaining: 972.05, monthlyAllowance: 1000, unit: 'credits' });
+    });
+
+    it('GETs /metering/usage with only the Bearer header and no body', async () => {
+      const captured = mockFetch(jsonResponse({ remaining: 1, monthUsageAllowance: 2, unit: 'credits' }));
+      await new PuterProvider().getUsage(TOKEN);
+      expect(captured.url).toBe(`${ORIGIN}/metering/usage`);
+      expect(captured.init.method).toBe('GET');
+      expect((captured.init.headers as Record<string, string>)['Authorization']).toBe(`Bearer ${TOKEN}`);
+      expect(captured.body).toBeNull();
+    });
+
+    it('rejects with a clear error when the payload shape is unexpected', async () => {
+      mockFetch(jsonResponse({ error: 'weird' }));
+      await expect(new PuterProvider().getUsage(TOKEN)).rejects.toThrow(/unexpected shape/);
+    });
+
+    it('maps an upstream 401 to a thrown provider error', async () => {
+      mockFetch(jsonResponse({ error: 'invalid token' }, 401));
+      await expect(new PuterProvider().getUsage(TOKEN)).rejects.toThrow();
+    });
+  });
 });
 
 // §9.9 — one account is one free allowance, shared across every model

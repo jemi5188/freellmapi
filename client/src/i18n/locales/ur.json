@@ -582,6 +582,10 @@
     "modelScopeClear": "دائرہ صاف کریں",
     "modelScopeBadgeOne": "محدود · 1 ماڈل",
     "modelScopeBadgeOther": "محدود · {count} ماڈلز",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "یہ کلید کن ماڈلز کے لیے استعمال ہو؟",
       "hint": "آپ کی {provider} کلید شامل کر دی گئی ہے اور فی الحال نیچے دیے گئے ہر ماڈل کے لیے استعمال ہو رہی ہے۔ جن ماڈلز کے لیے اس کلید کو اجازت نہیں، ان کا نشان ہٹا دیں — راؤٹر ان کے لیے اسے چھوڑ دے گا۔",
