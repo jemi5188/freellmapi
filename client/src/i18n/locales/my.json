@@ -582,6 +582,10 @@
     "modelScopeClear": "အတိုင်းအတာ ဖယ်ရှားရန်",
     "modelScopeBadgeOne": "ကန့်သတ် · မော်ဒယ် 1 ခု",
     "modelScopeBadgeOther": "ကန့်သတ် · မော်ဒယ် {count} ခု",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ဤကီးသည် မည်သည့်မော်ဒယ်များကို ဝန်ဆောင်ပေးသင့်သလဲ?",
       "hint": "သင်၏ {provider} ကီးကို ထည့်ပြီးပါပြီ၊ လက်ရှိတွင် အောက်ပါ မော်ဒယ်အားလုံးကို ဝန်ဆောင်ပေးနေပါသည်။ ဤကီးကို အသုံးပြုခွင့်မရှိသည့် မော်ဒယ်များ၏ အမှန်ခြစ်ကို ဖြုတ်ပါ — router သည် ထိုမော်ဒယ်များအတွက် ၎င်းကို ကျော်သွားပါမည်။",

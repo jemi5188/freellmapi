@@ -582,6 +582,10 @@
     "modelScopeClear": "दायरा हटाउनुहोस्",
     "modelScopeBadgeOne": "सीमित · 1 मोडेल",
     "modelScopeBadgeOther": "सीमित · {count} मोडेल",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "यो कुञ्जीले कुन मोडेलहरूलाई सेवा दिनुपर्छ?",
       "hint": "तपाईंको {provider} कुञ्जी थपियो र यसले हाल तलका सबै मोडेललाई सेवा दिन्छ। यो कुञ्जीले प्रयोग गर्न नहुने कुनै पनि मोडेलको चिन्ह हटाउनुहोस् — राउटरले ती मोडेलका लागि यो कुञ्जी छोड्नेछ।",

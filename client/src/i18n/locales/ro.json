@@ -582,6 +582,10 @@
     "modelScopeClear": "Șterge domeniul",
     "modelScopeBadgeOne": "limitată · 1 model",
     "modelScopeBadgeOther": "limitată · {count} modele",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Ce modele ar trebui să deservească această cheie?",
       "hint": "Cheia ta {provider} a fost adăugată și deservește momentan toate modelele de mai jos. Debifează-le pe cele pe care această cheie nu are voie să le folosească — routerul o va sări pentru ele.",

@@ -582,6 +582,10 @@
     "modelScopeClear": "व्याप्ती काढा",
     "modelScopeBadgeOne": "मर्यादित · 1 मॉडेल",
     "modelScopeBadgeOther": "मर्यादित · {count} मॉडेल",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ही की कोणत्या मॉडेल्ससाठी वापरली जावी?",
       "hint": "तुमची {provider} की जोडली गेली आहे आणि सध्या ती खालील प्रत्येक मॉडेलसाठी वापरली जाते. ज्या मॉडेल्ससाठी ही की वापरता येणार नाही त्यांची निवड काढून टाका — राउटर त्यांच्यासाठी ती वगळेल.",

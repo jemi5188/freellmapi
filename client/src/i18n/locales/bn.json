@@ -582,6 +582,10 @@
     "modelScopeClear": "পরিধি মুছুন",
     "modelScopeBadgeOne": "সীমিত · 1টি মডেল",
     "modelScopeBadgeOther": "সীমিত · {count}টি মডেল",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "এই কী কোন মডেলগুলির জন্য কাজ করবে?",
       "hint": "আপনার {provider} কী যোগ করা হয়েছে এবং এটি এখন নিচের প্রতিটি মডেলের জন্য কাজ করে। যেসব মডেলে এই কী ব্যবহার করা উচিত নয়, সেগুলির টিক তুলে দিন — রাউটার সেগুলির জন্য এই কী এড়িয়ে যাবে।",

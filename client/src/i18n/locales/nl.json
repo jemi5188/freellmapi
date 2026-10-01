@@ -582,6 +582,10 @@
     "modelScopeClear": "Bereik wissen",
     "modelScopeBadgeOne": "beperkt · 1 model",
     "modelScopeBadgeOther": "beperkt · {count} modellen",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Welke modellen moet deze sleutel bedienen?",
       "hint": "Je {provider}-sleutel is toegevoegd en bedient op dit moment alle modellen hieronder. Vink de modellen uit waarvoor deze sleutel niet gebruikt mag worden — de router slaat de sleutel daarvoor over.",

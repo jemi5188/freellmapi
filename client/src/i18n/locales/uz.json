@@ -582,6 +582,10 @@
     "modelScopeClear": "Doirani tozalash",
     "modelScopeBadgeOne": "cheklangan · 1 model",
     "modelScopeBadgeOther": "cheklangan · {count} model",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Bu kalit qaysi modellarga xizmat qilsin?",
       "hint": "{provider} kalitingiz qo‘shildi va hozirda quyidagi barcha modellarga xizmat qilmoqda. Bu kalitdan foydalanishga ruxsat berilmagan modellardan belgini olib tashlang — router ular uchun bu kalitni o‘tkazib yuboradi.",

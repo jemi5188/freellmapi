@@ -582,6 +582,10 @@
     "modelScopeClear": "Hichapụ oke",
     "modelScopeBadgeOne": "oke · model 1",
     "modelScopeBadgeOther": "oke · model {count}",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Kedu ụdị ndị igodo a kwesịrị iweta?",
       "hint": "Etinyela igodo {provider} gị, ọ na-ewetakwa ụdị niile dị n'okpuru ugbu a. Wepụ akara na nke ọ bụla igodo a na-enweghị ikike iji — rawụta ga-agafe ya maka ndị ahụ.",

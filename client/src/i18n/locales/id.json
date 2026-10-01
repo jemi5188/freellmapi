@@ -582,6 +582,10 @@
     "modelScopeClear": "Hapus cakupan",
     "modelScopeBadgeOne": "dibatasi · 1 model",
     "modelScopeBadgeOther": "dibatasi · {count} model",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Model mana saja yang boleh dilayani kunci ini?",
       "hint": "Kunci {provider} Anda telah ditambahkan dan saat ini melayani semua model di bawah. Hapus centang pada model yang tidak boleh dipakai kunci ini — router akan melewatinya untuk model tersebut.",

@@ -582,6 +582,10 @@
     "modelScopeClear": "Очистити область",
     "modelScopeBadgeOne": "обмежено · 1 модель",
     "modelScopeBadgeOther": "обмежено · {count} моделей",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Які моделі має обслуговувати цей ключ?",
       "hint": "Ваш ключ {provider} додано, і зараз він обслуговує всі моделі нижче. Зніміть позначки з тих, які цьому ключу використовувати не можна — для них маршрутизатор його пропускатиме.",

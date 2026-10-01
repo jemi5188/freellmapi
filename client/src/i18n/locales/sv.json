@@ -582,6 +582,10 @@
     "modelScopeClear": "Rensa omfång",
     "modelScopeBadgeOne": "begränsad · 1 modell",
     "modelScopeBadgeOther": "begränsad · {count} modeller",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Vilka modeller ska den här nyckeln betjäna?",
       "hint": "Din {provider}-nyckel har lagts till och betjänar just nu alla modeller nedan. Avmarkera de modeller som nyckeln inte får användas för — routern hoppar då över den för dessa.",

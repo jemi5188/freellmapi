@@ -582,6 +582,10 @@
     "modelScopeClear": "Əhatəni təmizlə",
     "modelScopeBadgeOne": "məhdud · 1 model",
     "modelScopeBadgeOther": "məhdud · {count} model",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Bu açar hansı modellərə xidmət etsin?",
       "hint": "{provider} açarınız əlavə edildi və hazırda aşağıdakı bütün modellərə xidmət edir. Bu açarın istifadəsinə icazə verilməyən modellərin işarəsini götürün — router həmin modellər üçün bu açarı ötürəcək.",

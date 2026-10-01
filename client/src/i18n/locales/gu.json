@@ -582,6 +582,10 @@
     "modelScopeClear": "વ્યાપ દૂર કરો",
     "modelScopeBadgeOne": "મર્યાદિત · 1 મૉડલ",
     "modelScopeBadgeOther": "મર્યાદિત · {count} મૉડલ",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "આ કી કયા મૉડલ માટે કામ કરવી જોઈએ?",
       "hint": "તમારી {provider} કી ઉમેરાઈ ગઈ છે અને હાલમાં તે નીચેના દરેક મૉડલ માટે કામ કરે છે. જે મૉડલ માટે આ કીનો ઉપયોગ ન થવો જોઈએ તેની ટિક હટાવો — રાઉટર તેમના માટે આ કીને છોડી દેશે.",

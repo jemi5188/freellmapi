@@ -582,6 +582,10 @@
     "modelScopeClear": "Effacer la portée",
     "modelScopeBadgeOne": "limitée · 1 modèle",
     "modelScopeBadgeOther": "limitée · {count} modèles",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Quels modèles cette clé doit-elle servir ?",
       "hint": "Votre clé {provider} a été ajoutée et sert actuellement tous les modèles ci-dessous. Décochez ceux que cette clé n'est pas autorisée à utiliser — le routeur l'ignorera pour ceux-là.",

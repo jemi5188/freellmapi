@@ -582,6 +582,10 @@
     "modelScopeClear": "Borrar alcance",
     "modelScopeBadgeOne": "limitada · 1 modelo",
     "modelScopeBadgeOther": "limitada · {count} modelos",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "¿Qué modelos debe atender esta clave?",
       "hint": "Se añadió tu clave de {provider} y ahora mismo atiende todos los modelos de abajo. Desmarca los que esta clave no tenga permiso para usar — el enrutador la omitirá para ellos.",

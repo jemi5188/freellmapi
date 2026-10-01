@@ -582,6 +582,10 @@
     "modelScopeClear": "ପରିସର ହଟାନ୍ତୁ",
     "modelScopeBadgeOne": "ସୀମିତ · 1 ମଡେଲ",
     "modelScopeBadgeOther": "ସୀମିତ · {count} ମଡେଲ",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ଏହି କୀ କେଉଁ ମଡେଲଗୁଡିକ ପାଇଁ କାମ କରିବ?",
       "hint": "ଆପଣଙ୍କ {provider} କୀ ଯୋଡାଗଲା ଏବଂ ବର୍ତ୍ତମାନ ଏହା ତଳେ ଥିବା ପ୍ରତ୍ୟେକ ମଡେଲ ପାଇଁ କାମ କରୁଛି। ଯେଉଁ ମଡେଲଗୁଡିକ ପାଇଁ ଏହି କୀ ବ୍ୟବହାର ହେବା ଉଚିତ ନୁହେଁ, ସେଗୁଡିକର ଚୟନ ହଟାଇଦିଅନ୍ତୁ — ରାଉଟର ସେଗୁଡିକ ପାଇଁ ଏହାକୁ ଛାଡ଼ିଦେବ।",

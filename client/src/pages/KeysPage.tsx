@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { SegmentedControl } from '@/components/ui/segmented-control'
 import { PageHeader } from '@/components/page-header'
 import type { ApiKey, Platform } from '../../../shared/types'
-import { Plus, Download } from 'lucide-react'
+import { Plus, Download, RefreshCw } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import type { HealthData } from '@/components/keys/shared'
 import { QuotaSignalsSection } from '@/components/keys/quota-signals-section'
@@ -75,6 +75,14 @@ export default function KeysPage() {
             {(tab === 'providers' || tab === 'quotaSignals') && keys.length > 0 && (
               <Button variant="outline" size="sm" onClick={() => checkAll.mutate()} disabled={checkAll.isPending}>
                 {checkAll.isPending ? t('keys.checking') : t('keys.checkAll')}
+              </Button>
+            )}
+            {/* Re-runs the free per-key metering fan-out (spec §4.1); the badge
+                query in ProviderList picks the fresh snapshot up on invalidation. */}
+            {tab === 'providers' && keys.some(k => k.platform === 'puter') && (
+              <Button variant="outline" size="sm" onClick={() => queryClient.invalidateQueries({ queryKey: ['keys', 'usage'] })}>
+                <RefreshCw className="size-3.5" />
+                {t('keys.usageRefresh')}
               </Button>
             )}
             {keys.length > 0 && (

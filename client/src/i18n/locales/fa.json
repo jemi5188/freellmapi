@@ -582,6 +582,10 @@
     "modelScopeClear": "پاک کردن محدوده",
     "modelScopeBadgeOne": "محدود · 1 مدل",
     "modelScopeBadgeOther": "محدود · {count} مدل",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "این کلید به کدام مدل‌ها سرویس بدهد؟",
       "hint": "کلید {provider} شما اضافه شد و در حال حاضر به همه مدل‌های زیر سرویس می‌دهد. تیک هر مدلی را که این کلید اجازه استفاده از آن را ندارد بردارید — مسیریاب برای آن مدل‌ها از این کلید صرف‌نظر می‌کند.",

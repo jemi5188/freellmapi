@@ -582,6 +582,10 @@
     "modelScopeClear": "Bereich löschen",
     "modelScopeBadgeOne": "begrenzt · 1 Modell",
     "modelScopeBadgeOther": "begrenzt · {count} Modelle",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Welche Modelle soll dieser Schlüssel bedienen?",
       "hint": "Ihr {provider}-Schlüssel wurde hinzugefügt und bedient derzeit alle Modelle unten. Deaktivieren Sie alle Modelle, für die dieser Schlüssel nicht verwendet werden darf — der Router überspringt ihn dann für diese.",

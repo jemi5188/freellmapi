@@ -582,6 +582,10 @@
     "modelScopeClear": "លុបវិសាលភាព",
     "modelScopeBadgeOne": "កំណត់ · ម៉ូដែល 1",
     "modelScopeBadgeOther": "កំណត់ · ម៉ូដែល {count}",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "តើកូនសោនេះគួរបម្រើម៉ូដែលណាខ្លះ?",
       "hint": "កូនសោ {provider} របស់អ្នកត្រូវបានបន្ថែម ហើយបច្ចុប្បន្នវាបម្រើម៉ូដែលទាំងអស់ខាងក្រោម។ សូមដកសញ្ញាធីកចេញពីម៉ូដែលណាដែលកូនសោនេះមិនត្រូវបានអនុញ្ញាតឱ្យប្រើ — រ៉ោតទ័រនឹងរំលងវាសម្រាប់ម៉ូដែលទាំងនោះ។",

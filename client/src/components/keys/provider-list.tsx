@@ -40,11 +40,19 @@ import { EditModelsDialog } from './edit-models-dialog'
 import { ModelScopeDialog } from './model-scope-dialog'
 import { TestModelsDialog } from './test-models-dialog'
 import { AddModelDialog } from './add-model-dialog'
+import { UsageBadge } from './usage-badge'
 
 type StatusFilter = 'all' | 'healthy' | 'issues' | 'disabled'
 
 // #787: what the batch bar can do to the selected keys of one group.
 type BulkAction = 'enable' | 'disable' | 'delete'
+
+// POST /api/keys/usage/refresh fans out one free metering read per enabled
+// puter key; a row whose read failed carries only the error — the snapshot
+// fields are omitted rather than zeroed.
+type UsageRefreshResponse = {
+  results: Array<{ keyId: number; ok: boolean; remaining?: number; allowance?: number; unit?: string; updatedAt?: number; error?: string }>
+}
 
 // The Providers tab body: a filter toolbar over a list of collapsible provider
 // groups. Owns the keys/health/proxy queries and every per-key mutation so
@@ -97,6 +105,28 @@ export function ProviderList({ onAddKey }: { onAddKey: () => void }) {
   })
   const bypassPlatforms = proxyData?.bypassPlatforms ?? []
   const proxyEnabled = proxyData?.enabled ?? true
+
+  // Metering snapshot for puter keys; the server fans out one free
+  // /metering/usage read per enabled key through its own proxy (spec §4.1).
+  const { data: usageData } = useQuery<UsageRefreshResponse>({
+    queryKey: ['keys', 'usage'],
+    queryFn: () => apiFetch<UsageRefreshResponse>('/api/keys/usage/refresh', { method: 'POST' }),
+    staleTime: 60_000,
+  })
+  // A failed read leaves the server's cached columns untouched, so a failed
+  // row falls back to the snapshot GET /api/keys already carries — the badge
+  // then shows those last known values behind the stale warning.
+  const usageByKey = new Map<number, { remaining: number; allowance: number; unit: string; updatedAt: number; fetchFailed: boolean }>()
+  for (const r of usageData?.results ?? []) {
+    const cached = keys.find(k => k.id === r.keyId)?.usage
+    usageByKey.set(r.keyId, {
+      remaining: r.remaining ?? cached?.remaining ?? 0,
+      allowance: r.allowance ?? cached?.allowance ?? 0,
+      unit: r.unit ?? cached?.unit ?? 'credits',
+      updatedAt: r.updatedAt ?? cached?.updatedAt ?? 0,
+      fetchFailed: !r.ok,
+    })
+  }
 
   const deleteKey = useMutation({
     mutationFn: (id: number) => apiFetch(`/api/keys/${id}`, { method: 'DELETE' }),
@@ -497,6 +527,7 @@ export function ProviderList({ onAddKey }: { onAddKey: () => void }) {
                       const hasCustomModels = customModels.length > 0
                       const isExpanded = expandedKeyIds.has(k.id)
                       const isChecking = checkKey.isPending && checkKey.variables === k.id
+                      const usage = usageByKey.get(k.id)
                       return (
                         <div key={k.id} className="bg-card">
                           <div className="group/krow flex items-center gap-3 px-4 py-3 hover:bg-muted/40 transition-colors">
@@ -574,6 +605,9 @@ export function ProviderList({ onAddKey }: { onAddKey: () => void }) {
                               >
                                 {t(k.modelScope!.length === 1 ? 'keys.modelScopeBadgeOne' : 'keys.modelScopeBadgeOther', { count: k.modelScope!.length })}
                               </Badge>
+                            )}
+                            {k.platform === 'puter' && usage && (
+                              <UsageBadge usage={usage} fetchFailed={usage.fetchFailed} />
                             )}
                             <div className="flex-1" />
                             {lastChecked && (

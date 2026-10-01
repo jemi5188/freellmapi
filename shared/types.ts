@@ -333,6 +333,8 @@ export interface ApiKey {
   modelScope?: string[] | null;
   /** The per-key proxy override with its password masked (#590); '' = none. */
   maskedProxyUrl?: string;
+  /** Cached metering snapshot (puter keys only); null = never fetched. */
+  usage?: { remaining: number; allowance: number; unit: string; updatedAt: number } | null;
   models?: ApiKeyModel[];
   cooldowns?: ApiKeyCooldown[];
 }

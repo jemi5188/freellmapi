@@ -582,6 +582,10 @@
     "modelScopeClear": "Limpar escopo",
     "modelScopeBadgeOne": "restrita · 1 modelo",
     "modelScopeBadgeOther": "restrita · {count} modelos",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Quais modelos esta chave deve atender?",
       "hint": "Sua chave da {provider} foi adicionada e no momento atende todos os modelos abaixo. Desmarque os que esta chave não pode usar — o roteador vai ignorá-la para esses modelos.",

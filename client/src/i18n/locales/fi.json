@@ -582,6 +582,10 @@
     "modelScopeClear": "Tyhjennä rajaus",
     "modelScopeBadgeOne": "rajattu · 1 malli",
     "modelScopeBadgeOther": "rajattu · {count} mallia",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Mitä malleja tämän avaimen tulisi palvella?",
       "hint": "{provider}-avaimesi lisättiin, ja se palvelee tällä hetkellä kaikkia alla olevia malleja. Poista valinta niistä malleista, joihin avainta ei saa käyttää — reititin ohittaa avaimen niiden kohdalla.",

@@ -582,6 +582,10 @@
     "modelScopeClear": "ਦਾਇਰਾ ਹਟਾਓ",
     "modelScopeBadgeOne": "ਸੀਮਤ · 1 ਮਾਡਲ",
     "modelScopeBadgeOther": "ਸੀਮਤ · {count} ਮਾਡਲ",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ਇਹ ਕੁੰਜੀ ਕਿਹੜੇ ਮਾਡਲਾਂ ਲਈ ਕੰਮ ਕਰੇ?",
       "hint": "ਤੁਹਾਡੀ {provider} ਕੁੰਜੀ ਸ਼ਾਮਲ ਕਰ ਦਿੱਤੀ ਗਈ ਹੈ ਅਤੇ ਇਸ ਵੇਲੇ ਇਹ ਹੇਠਾਂ ਦਿੱਤੇ ਹਰ ਮਾਡਲ ਲਈ ਕੰਮ ਕਰਦੀ ਹੈ। ਜਿਨ੍ਹਾਂ ਮਾਡਲਾਂ ਲਈ ਇਹ ਕੁੰਜੀ ਨਹੀਂ ਵਰਤੀ ਜਾਣੀ ਚਾਹੀਦੀ, ਉਹਨਾਂ ਦੀ ਚੋਣ ਹਟਾ ਦਿਓ — ਰਾਊਟਰ ਉਹਨਾਂ ਲਈ ਇਸਨੂੰ ਛੱਡ ਦੇਵੇਗਾ।",

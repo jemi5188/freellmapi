@@ -582,6 +582,10 @@
     "modelScopeClear": "పరిధిని తొలగించండి",
     "modelScopeBadgeOne": "పరిమితం · 1 మోడల్",
     "modelScopeBadgeOther": "పరిమితం · {count} మోడళ్లు",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "ఈ కీ ఏ మోడల్‌లకు సేవ అందించాలి?",
       "hint": "మీ {provider} కీ జోడించబడింది, ప్రస్తుతం ఇది కింది ప్రతి మోడల్‌కు సేవ అందిస్తుంది. ఈ కీని ఉపయోగించకూడని మోడల్‌ల ఎంపికను తీసివేయండి — వాటికి రూటర్ ఈ కీని దాటవేస్తుంది.",

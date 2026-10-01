@@ -582,6 +582,10 @@
     "modelScopeClear": "Cancella ambito",
     "modelScopeBadgeOne": "limitata · 1 modello",
     "modelScopeBadgeOther": "limitata · {count} modelli",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Quali modelli deve servire questa chiave?",
       "hint": "La tua chiave {provider} è stata aggiunta e al momento serve tutti i modelli qui sotto. Deseleziona quelli che questa chiave non può usare — il router la salterà per quei modelli.",

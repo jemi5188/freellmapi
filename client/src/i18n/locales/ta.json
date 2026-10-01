@@ -582,6 +582,10 @@
     "modelScopeClear": "வரம்பை நீக்கு",
     "modelScopeBadgeOne": "வரம்பிடப்பட்டது · 1 மாடல்",
     "modelScopeBadgeOther": "வரம்பிடப்பட்டது · {count} மாடல்கள்",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "இந்த விசை எந்த மாடல்களுக்குச் சேவை செய்ய வேண்டும்?",
       "hint": "உங்கள் {provider} விசை சேர்க்கப்பட்டது, தற்போது இது கீழே உள்ள எல்லா மாடல்களுக்கும் சேவை செய்கிறது. இந்த விசை பயன்படுத்தக் கூடாத மாடல்களின் தேர்வை நீக்கவும் — அவற்றுக்கு ரூட்டர் இதைத் தவிர்க்கும்.",

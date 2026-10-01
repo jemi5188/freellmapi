@@ -582,6 +582,10 @@
     "modelScopeClear": "Burahin ang saklaw",
     "modelScopeBadgeOne": "limitado · 1 modelo",
     "modelScopeBadgeOther": "limitado · {count} na modelo",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Aling mga modelo ang dapat pagsilbihan ng key na ito?",
       "hint": "Naidagdag na ang iyong {provider} key at kasalukuyan nitong pinagsisilbihan ang lahat ng modelo sa ibaba. Alisan ng tsek ang alinmang hindi pinapayagang gamitin ng key na ito — laktawan ito ng router para sa mga iyon.",

@@ -582,6 +582,10 @@
     "modelScopeClear": "נקה טווח",
     "modelScopeBadgeOne": "מוגבל · מודל 1",
     "modelScopeBadgeOther": "מוגבל · {count} מודלים",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "לאילו מודלים ישמש המפתח הזה?",
       "hint": "מפתח ה-{provider} שלך נוסף וכרגע הוא משמש את כל המודלים שלמטה. בטל את הסימון של כל מודל שהמפתח הזה אינו רשאי להשתמש בו — הנתב ידלג עליו עבור אותם מודלים.",

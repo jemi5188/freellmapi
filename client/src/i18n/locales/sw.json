@@ -582,6 +582,10 @@
     "modelScopeClear": "Futa wigo",
     "modelScopeBadgeOne": "imezuiliwa · modeli 1",
     "modelScopeBadgeOther": "imezuiliwa · modeli {count}",
+    "usageBadge": "Remaining monthly allowance",
+    "usageRefresh": "Refresh usage",
+    "usageUpdated": "Updated {time}",
+    "usageStale": "Last update failed — showing the last known values",
     "modelPicker": {
       "title": "Ufunguo huu unapaswa kuhudumia modeli zipi?",
       "hint": "Ufunguo wako wa {provider} umeongezwa na kwa sasa unahudumia kila modeli iliyo hapa chini. Ondoa alama kwenye modeli yoyote ambayo ufunguo huu hauruhusiwi kutumia — kipanga njia kitaruka ufunguo huu kwa modeli hizo.",
