@@ -22,8 +22,10 @@ import { endpointScopeForBaseUrl, normalizeBaseUrl } from '../lib/endpoint-scope
 import { recordCustomModelTombstone } from '../services/custom-model-tombstone.js';
 import type { Db } from '../db/types.js';
 import type { Platform } from '@freellmapi/shared/types.js';
+import type { BaseProvider, KeyUsage } from '../providers/base.js';
 import { parseModelScope } from '../lib/model-scope.js';
 import { KEY_PROXY_URL_ERROR, KEY_PROXY_URL_MAX, decryptProxyUrl, encryptProxyUrl, isValidKeyProxyUrl, maskProxyUrl } from '../lib/key-proxy.js';
+import { withKeyProxy } from '../lib/proxy.js';
 
 export const keysRouter = Router();
 
@@ -389,6 +391,17 @@ keysRouter.get('/', (_req: Request, res: Response) => {
       // override. Enough for the dashboard to show that a key routes through
       // its own exit, without handing the proxy credentials back out.
       maskedProxyUrl: maskProxyUrl(decryptProxyUrl(row)),
+      // Cached metering snapshot for the dashboard badge (puter only).
+      // null = never fetched — the dashboard hides the badge.
+      usage:
+        row.platform === 'puter' && row.usage_updated_at != null
+          ? {
+              remaining: row.usage_remaining,
+              allowance: row.usage_allowance,
+              unit: 'credits',
+              updatedAt: row.usage_updated_at,
+            }
+          : null,
       models: row.platform === 'custom' ? (modelsByEndpoint.get(endpointOf(Number(row.id))) ?? []) : undefined,
       cooldowns: cooldowns.map(c => ({
         modelId: c.modelId,
@@ -399,6 +412,44 @@ keysRouter.get('/', (_req: Request, res: Response) => {
   });
 
   res.json(keys);
+});
+
+// Refresh the metering-usage snapshot for every enabled puter key. The read
+// is free (a metering read, not an AI call) and each fetch rides that key's
+// own proxy. One key failing (dead token, dead proxy) must not block the
+// others, so every result lands in its own slot; a failure comes back as a
+// string on that key's slot and the cached columns stay untouched.
+keysRouter.post('/usage/refresh', async (_req: Request, res: Response) => {
+  const db = getDb();
+  const rows = db.prepare(
+    "SELECT id, encrypted_key, iv, auth_tag, proxy_encrypted, proxy_iv, proxy_auth_tag FROM api_keys WHERE platform = 'puter' AND enabled = 1",
+  ).all() as Array<{ id: number; encrypted_key: string; iv: string; auth_tag: string; proxy_encrypted: string | null; proxy_iv: string | null; proxy_auth_tag: string | null }>;
+
+  // resolveProvider types the result as the broad BaseProvider, which does not
+  // declare getUsage; only PuterProvider implements it today.
+  const provider = resolveProvider('puter') as BaseProvider & { getUsage?: (apiKey: string) => Promise<KeyUsage> };
+  if (!provider || typeof provider.getUsage !== 'function') {
+    res.status(503).json({ error: 'Puter provider unavailable' });
+    return;
+  }
+  // Bind once: property narrowing does not survive into the per-row closures,
+  // and the real method relies on `this`.
+  const getUsage = provider.getUsage.bind(provider);
+
+  const results = await Promise.all(rows.map(async (row) => {
+    try {
+      const apiKey = decrypt(row.encrypted_key, row.iv, row.auth_tag);
+      const usage: KeyUsage = await withKeyProxy(decryptProxyUrl(row), () => getUsage(apiKey));
+      const updatedAt = Date.now();
+      db.prepare('UPDATE api_keys SET usage_remaining = ?, usage_allowance = ?, usage_updated_at = ? WHERE id = ?')
+        .run(usage.remaining, usage.monthlyAllowance, updatedAt, row.id);
+      return { keyId: row.id, ok: true as const, remaining: usage.remaining, allowance: usage.monthlyAllowance, unit: usage.unit, updatedAt };
+    } catch (error) {
+      return { keyId: row.id, ok: false as const, error: error instanceof Error ? error.message : String(error) };
+    }
+  }));
+
+  res.json({ results });
 });
 
 // Clear every active cooldown for one key. An escalated cooldown can bench a key
