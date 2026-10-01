@@ -16,20 +16,25 @@ tedious.
 **Goal:** show each Puter key's remaining allowance directly on its row in
 the Keys page, so the operator can see all account balances at a glance.
 
-## 2. Verified upstream facts (probed 2026-10-01, live)
+## 2. Verified upstream facts (probed 2026-10-01, live; structure corrected same day)
 
 - Endpoint: `GET https://api.puter.com/metering/usage`, `Authorization:
   Bearer <auth_token>`. This is the exact call behind
   `puter.auth.getMonthlyUsage()` (confirmed in the open-source SDK:
   `src/puter-js/src/modules/Auth.js`) and the dashboard's usage tab.
-- Response (200, flat — no `allowanceInfo` wrapper in practice):
+- Response (200). **Correction from the initial probe:** totals nest under
+  top-level `allowanceInfo`; the early probe printed `j.allowanceInfo ?? j`
+  and misread it as a flat payload. The `usage` object carries per-model
+  detail rows the adapter ignores:
 
   ```json
   {
-    "remaining": 972.055823119917,
-    "monthUsageAllowance": 1000,
-    "addons": {},
-    "unit": "credits"
+    "usage": {
+      "allowanceUsed": 27.98, "total": 27.98, "monthlyChargesApplied": 1,
+      "openai:gpt-5_dot_6-terra:prompt_tokens": { "units": 8, "cost": 0.0384, "count": 1 }
+    },
+    "appTotals": {},
+    "allowanceInfo": { "remaining": 972.06, "monthUsageAllowance": 1000, "unit": "credits" }
   }
   ```
 

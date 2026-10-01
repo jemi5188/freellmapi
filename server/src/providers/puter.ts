@@ -424,9 +424,10 @@ export class PuterProvider extends BaseProvider {
   /**
    * Read the account's monthly allowance WITHOUT spending any of it — a
    * metering read, not an AI call; this is the same endpoint the puter.com
-   * dashboard's usage tab polls (`puter.auth.getMonthlyUsage()`). The payload
-   * is flat (`remaining` / `monthUsageAllowance` / `unit`), probed live
-   * 2026-10-01. Rides the per-key proxy like every other upstream call.
+   * dashboard's usage tab polls (`puter.auth.getMonthlyUsage()`). Live probe
+   * 2026-10-01: totals nest under top-level `allowanceInfo` (the `usage`
+   * object carries per-model detail rows this adapter ignores); the flat
+   * top-level shape is tolerated for backwards compatibility.
    */
   async getUsage(apiKey: string): Promise<KeyUsage> {
     const res = await this.fetchWithTimeout(`${API_ORIGIN}/metering/usage`, {
@@ -438,12 +439,18 @@ export class PuterProvider extends BaseProvider {
       throw this.driverHttpError(res, errBody);
     }
 
-    const body = await res.json() as { remaining?: unknown; monthUsageAllowance?: unknown; unit?: unknown };
-    const remaining = numberOr(body.remaining);
-    const monthlyAllowance = numberOr(body.monthUsageAllowance);
+    const body = await res.json() as {
+      allowanceInfo?: { remaining?: unknown; monthUsageAllowance?: unknown; unit?: unknown };
+      remaining?: unknown;
+      monthUsageAllowance?: unknown;
+      unit?: unknown;
+    };
+    const info = body.allowanceInfo ?? body;
+    const remaining = numberOr(info.remaining);
+    const monthlyAllowance = numberOr(info.monthUsageAllowance);
     if (remaining === undefined || monthlyAllowance === undefined) {
       throw providerHttpError(res, `${this.name}: metering/usage returned an unexpected shape`, body);
     }
-    return { remaining, monthlyAllowance, unit: nonEmptyString(body.unit) ?? 'credits' };
+    return { remaining, monthlyAllowance, unit: nonEmptyString(info.unit) ?? 'credits' };
   }
 }

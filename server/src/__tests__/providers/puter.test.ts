@@ -468,16 +468,28 @@ describe('PuterProvider', () => {
     });
   });
 
-  // §4.1 of the usage-badge spec — metering read, flat payload, free of charge.
+  // §4.1 of the usage-badge spec — metering read, free of charge. Live probe
+  // 2026-10-01: totals nest under top-level `allowanceInfo`; `usage` carries
+  // per-model detail rows the adapter ignores.
   describe('getUsage', () => {
-    it('reads the flat metering payload', async () => {
-      mockFetch(jsonResponse({ remaining: 972.05, monthUsageAllowance: 1000, addons: {}, unit: 'credits' }));
+    it('reads totals from the nested allowanceInfo payload', async () => {
+      mockFetch(jsonResponse({
+        usage: {
+          allowanceUsed: 27.98, total: 27.98, monthlyChargesApplied: 1,
+          'openai:gpt-5_dot_6-terra:prompt_tokens': { units: 8, cost: 0.0384, count: 1 },
+        },
+        appTotals: {},
+        allowanceInfo: { remaining: 972.05, monthUsageAllowance: 1000, unit: 'credits' },
+      }));
       const usage = await new PuterProvider().getUsage(TOKEN);
       expect(usage).toEqual({ remaining: 972.05, monthlyAllowance: 1000, unit: 'credits' });
     });
 
     it('GETs /metering/usage with only the Bearer header and no body', async () => {
-      const captured = mockFetch(jsonResponse({ remaining: 1, monthUsageAllowance: 2, unit: 'credits' }));
+      const captured = mockFetch(jsonResponse({
+        usage: { allowanceUsed: 1 },
+        allowanceInfo: { remaining: 999, monthUsageAllowance: 1000, unit: 'credits' },
+      }));
       await new PuterProvider().getUsage(TOKEN);
       expect(captured.url).toBe(`${ORIGIN}/metering/usage`);
       expect(captured.init.method).toBe('GET');
@@ -486,7 +498,7 @@ describe('PuterProvider', () => {
     });
 
     it('rejects with a clear error when the payload shape is unexpected', async () => {
-      mockFetch(jsonResponse({ error: 'weird' }));
+      mockFetch(jsonResponse({ usage: {}, allowanceInfo: {}, appTotals: {} }));
       await expect(new PuterProvider().getUsage(TOKEN)).rejects.toThrow(/unexpected shape/);
     });
 
