@@ -6,7 +6,7 @@ import type {
   Platform,
   TokenUsage,
 } from '@freellmapi/shared/types.js';
-import { BaseProvider, providerHttpError, type CompletionOptions, type KeyValidationResult, type ProviderHttpError } from './base.js';
+import { BaseProvider, providerHttpError, type CompletionOptions, type KeyUsage, type KeyValidationResult, type ProviderHttpError } from './base.js';
 import { recordQuotaObservationsFromResponse, type QuotaObservationContext } from '../services/provider-quota.js';
 import { providerTimeoutMs, streamStallTimeoutMs } from '../lib/provider-timeout.js';
 import { resolveMaxTokens } from '../lib/sampling-params.js';
@@ -53,6 +53,8 @@ const OPENAI_FINISH_REASONS = new Set(['stop', 'length', 'tool_calls', 'function
 // the project-wide 15s default false-flags them. PROVIDER_TIMEOUT_PUTER
 // overrides (#547).
 const PUTER_TIMEOUT_MS = providerTimeoutMs('puter', 120000);
+// The metering read is a single cheap GET; it never needs the 120s chat budget.
+const USAGE_TIMEOUT_MS = 30_000;
 
 /** The driver's stream event vocabulary. Everything else is ignored so a new
  *  event type upstream cannot break the adapter. */
@@ -417,5 +419,31 @@ export class PuterProvider extends BaseProvider {
     });
 
     return this.validationResult(res);
+  }
+
+  /**
+   * Read the account's monthly allowance WITHOUT spending any of it — a
+   * metering read, not an AI call; this is the same endpoint the puter.com
+   * dashboard's usage tab polls (`puter.auth.getMonthlyUsage()`). The payload
+   * is flat (`remaining` / `monthUsageAllowance` / `unit`), probed live
+   * 2026-10-01. Rides the per-key proxy like every other upstream call.
+   */
+  async getUsage(apiKey: string): Promise<KeyUsage> {
+    const res = await this.fetchWithTimeout(`${API_ORIGIN}/metering/usage`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${apiKey}` },
+    }, USAGE_TIMEOUT_MS, { timeoutBounds: 'request' });
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => null);
+      throw this.driverHttpError(res, errBody);
+    }
+
+    const body = await res.json() as { remaining?: unknown; monthUsageAllowance?: unknown; unit?: unknown };
+    const remaining = numberOr(body.remaining);
+    const monthlyAllowance = numberOr(body.monthUsageAllowance);
+    if (remaining === undefined || monthlyAllowance === undefined) {
+      throw providerHttpError(res, `${this.name}: metering/usage returned an unexpected shape`, body);
+    }
+    return { remaining, monthlyAllowance, unit: nonEmptyString(body.unit) ?? 'credits' };
   }
 }
