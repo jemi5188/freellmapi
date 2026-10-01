@@ -344,7 +344,14 @@ describe('PuterProvider', () => {
       expect(chunks.map(c => c.choices[0].delta.content ?? '').join('')).toBe('a');
     });
 
-    it('throws on an in-stream error line', async () => {
+    it('throws a retryable in-band provider error on an in-stream error line', async () => {
+      // Live 2026-10-01: Puter reports account-level risk-control blocks as an
+      // in-band error line on an HTTP 200 stream ("Policy Violation: this user
+      // has been blocked…"). The bare-Error wording ("Puter stream error: …")
+      // matched nothing in isRetryableError — no status, no known phrase — so
+      // the failure was fatal and never failed over to the sibling key. The
+      // 'in-band provider error' phrase is the router's retryable marker for
+      // lines that arrive before any byte reached the client.
       mockFetch(ndjsonResponse([
         { type: 'text', text: 'partial' },
         { type: 'error', message: 'upstream exploded' },
@@ -352,7 +359,7 @@ describe('PuterProvider', () => {
 
       await expect(
         collect(new PuterProvider().streamChatCompletion(TOKEN, MESSAGES, 'gpt-5-nano')),
-      ).rejects.toThrow('upstream exploded');
+      ).rejects.toThrow('in-band provider error: upstream exploded');
     });
   });
 

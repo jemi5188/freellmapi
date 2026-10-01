@@ -310,7 +310,14 @@ export class PuterProvider extends BaseProvider {
           if (!event) continue;
 
           if (event.type === 'error') {
-            throw new Error(`${this.name} stream error: ${nonEmptyString(event.message) ?? 'upstream error'}`);
+            // Puter reports upstream failures (account risk-control blocks,
+            // provider outages) as in-band error lines on an HTTP 200 stream.
+            // The phrase matters: 'in-band provider error' is the router's
+            // retryable marker (lib/error-classify.ts) — these lines arrive
+            // before any byte reached the client, so the next candidate key
+            // can serve the request invisibly. A bare Error here classified
+            // fatal and stranded the sibling keys (live 2026-10-01).
+            throw new Error(`${this.name} in-band provider error: ${nonEmptyString(event.message) ?? 'upstream error'}`);
           }
           if (event.type === 'usage') {
             usage = this.normalizeUsage(event.usage);
