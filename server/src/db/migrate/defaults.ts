@@ -38,6 +38,7 @@ import * as keyMonthlyUsage from '../migrations/20260914_000001_key_monthly_usag
 import * as quotaSnapshotFreshness from '../migrations/20260915_000001_quota_snapshot_freshness.js';
 import * as requestModelAttribution from '../migrations/20260913_000001_request_model_attribution.js';
 import * as puterModels from '../migrations/20260928_000001_puter_models.js';
+import * as puterExpansion from '../migrations/20261001_000001_puter_models_expansion.js';
 
 export interface MigrationModule {
   up(db: Db): void;
@@ -88,6 +89,7 @@ export const REQUEST_MODEL_ATTRIBUTION_FILENAME = '20260913_000001_request_model
 export const KEY_MONTHLY_USAGE_FILENAME = '20260914_000001_key_monthly_usage.ts';
 export const QUOTA_SNAPSHOT_FRESHNESS_FILENAME = '20260915_000001_quota_snapshot_freshness.ts';
 export const PUTER_MODELS_FILENAME = '20260928_000001_puter_models.ts';
+export const PUTER_EXPANSION_FILENAME = '20261001_000001_puter_models_expansion.ts';
 
 export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: LEGACY_BASELINE_FILENAME, module: legacyBaseline },
@@ -129,4 +131,5 @@ export const DEFAULT_MIGRATIONS: readonly DefaultMigration[] = [
   { filename: KEY_MONTHLY_USAGE_FILENAME, module: keyMonthlyUsage },
   { filename: QUOTA_SNAPSHOT_FRESHNESS_FILENAME, module: quotaSnapshotFreshness },
   { filename: PUTER_MODELS_FILENAME, module: puterModels },
+  { filename: PUTER_EXPANSION_FILENAME, module: puterExpansion },
 ];
