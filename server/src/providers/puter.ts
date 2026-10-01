@@ -117,13 +117,23 @@ export class PuterProvider extends BaseProvider {
     if (options?.temperature != null) args.temperature = options.temperature;
     const maxTokens = resolveMaxTokens(this.platform, options?.max_tokens, options?.contextBudget);
     if (maxTokens != null) args.max_tokens = maxTokens;
-    if (options?.tools?.length) args.tools = options.tools;
+    if (options?.tools?.length) {
+      args.tools = options.tools;
+      // Reasoning models (gpt-6 family) 400 on "function tools + a non-none
+      // reasoning_effort" — and when the client omits the knob, the driver's
+      // own default IS a non-none effort, so every tools request would fail
+      // without the client ever sending one. Pinning 'none' here is the
+      // upstream's own remedy; the driver accepts the field (§10.4 probe) and
+      // tool calls don't need a reasoning budget. Without tools the field
+      // stays unset so the model's reasoning default is preserved.
+      args.reasoning_effort = 'none';
+    }
     // Deliberately absent: tool_choice / parallel_tool_calls (the official SDK
     // does not pass tool_choice on) and every extended sampling knob — the
     // adapter ships only the fields above, which is what the `puter` policy's
     // all-drop list in sampling-params.ts declares. See §5.1/§10.4 of the
     // design doc: the driver itself tolerates reasoning_effort, but this
-    // adapter does not forward it.
+    // adapter does not forward it (except the tools-only 'none' pin above).
     return {
       interface: IFACE,
       driver: DRIVER,

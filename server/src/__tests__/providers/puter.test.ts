@@ -126,6 +126,35 @@ describe('PuterProvider', () => {
       expect(captured.body.args.parallel_tool_calls).toBeUndefined();
     });
 
+    // Live 2026-09-30, gpt-6-luna: Puter's upstreams 400 "Function tools with
+    // reasoning_effort are not supported … set reasoning_effort to 'none'".
+    // When the client omits the knob the driver-side default IS a non-none
+    // effort, so reasoning models 400 on every tools request without the
+    // client ever sending one. Pinning 'none' when tools are in play is the
+    // upstream's own remedy and the driver accepts the field (§10.4 probe).
+    it('pins reasoning_effort to none when tools are present', async () => {
+      const captured = mockFetch(jsonResponse({
+        success: true,
+        result: { message: { role: 'assistant', content: 'ok' }, finish_reason: 'stop' },
+      }));
+
+      await new PuterProvider().chatCompletion(TOKEN, MESSAGES, 'gpt-6-luna', { tools: [TOOL] });
+
+      expect(captured.body.args.tools).toEqual([TOOL]);
+      expect(captured.body.args.reasoning_effort).toBe('none');
+    });
+
+    it('leaves reasoning_effort unset without tools (the driver default preserves reasoning)', async () => {
+      const captured = mockFetch(jsonResponse({
+        success: true,
+        result: { message: { role: 'assistant', content: 'ok' }, finish_reason: 'stop' },
+      }));
+
+      await new PuterProvider().chatCompletion(TOKEN, MESSAGES, 'gpt-6-luna');
+
+      expect(captured.body.args.reasoning_effort).toBeUndefined();
+    });
+
     it('sends stream:true on the streaming path', async () => {
       const captured = mockFetch(ndjsonResponse([{ type: 'text', text: 'hi' }]));
       await collect(new PuterProvider().streamChatCompletion(TOKEN, MESSAGES, 'gpt-5-nano'));
